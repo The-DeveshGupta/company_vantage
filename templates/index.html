@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %} Home {% endblock title %}
+
+{% block navbar %}
+    {% if is_authenticated %}
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'web_app:profile' %}">Profile</a>
+            </li>
+        </ul>
+    {% endif %}
+{% endblock navbar %}
+
+{% block body %}
+<div class="container">
+    This website helps retail investor for free.
+    {% if username %}
+        Welcome {{ username }}
+    {% else %}
+        To get best experience, Login/Signup to save your progress.
+        <a class="btn btn-primary" href="{% url 'web_app:login' %}" class="button">Log in</a>
+        <a class="btn btn-primary" href="{% url 'web_app:signup' %}" class="button">Sign up</a>
+    {% endif %}
+</div>
+{% endblock body %}

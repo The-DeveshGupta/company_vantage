@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %} Sign Up {% endblock title %}
+
+{% block body %}
+<div class="container">
+
+</div>
+<div class="container">
+    <form class="row g-3" action="{% url 'web_app:signup' %}" method="post">
+      {% csrf_token %}
+      <div class="col-md-12">
+        <label for="inputUserName" class="form-label">Username</label>
+        <input type="text" class="form-control" id="inputUserName" name="username" required>
+        {% if username_error == 'already_exist' %}
+            <p style="color:red">Username already exist!</p>
+        {% endif %}
+      </div>
+      <div class="col-md-6">
+        <label for="inputFirstName" class="form-label">First name</label>
+        <input type="text" class="form-control" id="inputFirstName" name="firstName">
+      </div>
+      <div class="col-md-6">
+        <label for="inputLastName" class="form-label">Last name</label>
+        <input type="text" class="form-control" id="inputLastName" name="lastName">
+      </div>
+      <div class="col-12">
+        <label for="inputEmail" class="form-label">Email address</label>
+        <input type="email" class="form-control" id="inputEmail" name="email" required>
+        {% if email_error == 'already_exist' %}
+            <p style="color:red">Email is already in use! Try logging in.</p>
+        {% endif %}
+      </div>
+      <div class="col-12">
+        <label for="inputPassword" class="form-label">Password</label>
+        <input type="password" class="form-control" id="inputPassword" name="password" required>
+      </div>
+      <div class="col-12">
+        <label for="inputCofirmPassword" class="form-label">Confirm password</label>
+        <input type="password" class="form-control" id="inputCofirmPassword" name="confirmPassword" required>
+        {% if password_error == 'different' %}
+          <p style="color:red">Confirm password didn't match with password!</p>
+        {% endif %}
+      </div>
+      <div class="col-1">
+        <button type="submit" class="btn btn-primary">Sign Up</button>
+      </div>
+    </form>
+</div>
+<div class="container">
+  <div>
+    </br>
+    Already registered? Try
+    <a class="col-1" href="{% url 'web_app:login' %}" class="button">Log in</a>
+  </div>
+</div>
+{% endblock body %}

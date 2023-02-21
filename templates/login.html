@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %} Log In {% endblock title %}
+
+{% block body %}
+{% if view == 'signup' %}
+  <div class="container">
+    <p style="color:green">Account created!</p>
+  </div>
+{% endif %}
+{% if login_error == 'wrong_credentials' %}
+  <div class="container">
+    <p style="color:green">Username or password is incorrect!</p>
+  </div>
+{% endif %}
+<div class="container">
+  <form action="{% url 'web_app:login' %}" method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="inputUserName" class="form-label">Username</label>
+      <input type="text" class="form-control" id="inputUserName" name="username" placeholder='{{ username }}' aria-describedby="emailHelp" required>
+    </div>
+    <div class="mb-3">
+      <label for="inputPassword" class="form-label">Password</label>
+      <input type="password" class="form-control" id="inputPassword" name="password">
+    </div>
+    <div class="mb-3 form-check">
+      <input type="checkbox" class="form-check-input" id="Check" name="check">
+      <label class="form-check-label" for="Check">Remember me</label>
+    </div>
+    <button type="submit" class="btn btn-primary">Log In</button>
+  </form>
+</div>
+<div class="container">
+  <div>
+    </br>
+    Not registered? Try
+    <a class="col-1" href="{% url 'web_app:signup' %}" class="button">Sign Up</a>
+  </div>
+</div>
+{% endblock body %}

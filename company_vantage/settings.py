@@ -35,6 +35,13 @@ SECRET_KEY = config["SECRET_KEY"]
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config["DEBUG"]
 
+# SECURITY WARNING: enabling this will generate lots of data!
+DATA_STORAGE = config["DATA_STORAGE"]
+
+# Other Credentials
+STOCKS_DATA_API_KEY = config["STOCKS_DATA_API_KEY"]
+STOCKS_DATA_PROVIDER = config["STOCKS_DATA_PROVIDER"]
+
 ALLOWED_HOSTS = []
 
 
@@ -47,6 +54,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'web_app',
+    'data_collector',
+    'data_visualizer',
+    'data_predictor',
 ]
 
 MIDDLEWARE = [
@@ -64,7 +75,7 @@ ROOT_URLCONF = 'company_vantage.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, "templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -126,6 +137,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# Added manually
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static")
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
