@@ -1,11 +1,13 @@
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import json
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout as auth_logout
+from django.urls import reverse
 
 
 def healthcheck(request):
@@ -26,10 +28,12 @@ def company(request):
     return render(request, 'company.html', data)
 
 
-@login_required()
 def profile(request):
-    # Incomplete
-    return render(request, 'profile.html')
+    if request.user.is_authenticated:
+        context = {"is_authenticated": request.user.is_authenticated, "username": request.user.username}
+        return render(request, 'profile.html', context)
+    else:
+        return redirect('web_app:home')
 
 
 @csrf_exempt
@@ -41,7 +45,7 @@ def login(request):
         user = authenticate(username=username, password=password)
         if user:
             auth_login(request, user)
-            return render(request, 'index.html', context)
+            return redirect('web_app:home')
         else:
             context["login_error"] = "wrong_credentials"
             return render(request, 'login.html', context)
@@ -72,11 +76,13 @@ def signup(request):
             user = User.objects.create_user(username=username, password=password, email=email, first_name=first_name,
                                             last_name=last_name)
             user.save()
-            return render(request, 'login.html', context)
+            auth_login(request, user)
+            return redirect(reverse('web_app:home'))
     else:
         return render(request, 'signup.html')
 
+
 @login_required()
 def logout(request):
-    # Incomplete
-    return render(request, 'index.html')
+    auth_logout(request)
+    return redirect('web_app:home')

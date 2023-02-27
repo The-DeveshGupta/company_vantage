@@ -15,7 +15,7 @@
 {% block body %}
 <div class="container">
     This website helps retail investor for free.
-    {% if username %}
+    {% if is_authenticated %}
         Welcome {{ username }}
     {% else %}
         To get best experience, Login/Signup to save your progress.

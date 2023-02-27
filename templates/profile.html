@@ -3,11 +3,23 @@
 {% block title %} Profile {% endblock title %}
 
 {% block navbar %}
-<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-    <li class="nav-item">
-      <a class="nav-link active" aria-current="page" href="#">Profile</a>
-    </li>
-</ul>
+    {% if is_authenticated %}
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'web_app:logout' %}">Log out</a>
+            </li>
+        </ul>
+    {% endif %}
 {% endblock navbar %}
 
-{% block body %} History of search {% endblock body %}
+{% block body %}
+<div class="container">
+    This website helps retail investor for free.
+    {% if is_authenticated %}
+        Welcome {{ username }}
+        History of search
+    {% else %}
+        How did you come here? Impossible!
+    {% endif %}
+</div>
+{% endblock body %}
